@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using YoloGroupTestTask.Services;
+using YoloGroupTestTask.Interfaces;
+using YoloGroupTestTask.Interfaces.FetchTopAssetPrices;
+using YoloGroupTestTask.Models.FetchTopAssetPrices;
 
 namespace YoloGroupTestTask.Controllers;
 
@@ -8,23 +10,25 @@ namespace YoloGroupTestTask.Controllers;
 /// subject area, it's hard to follow REST principles 
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+[Route("api/v1/[controller]/[action]")]
 public class TasksController : ControllerBase
 {
-    private readonly IEmitNumbersService _emitNumbersService;
-    private readonly IInvertTextService _invertTextService;
     private readonly ICalculateHashService _calculateHashService;
+    private readonly IEmitNumbersService _emitNumbersService;
+    private readonly IFetchTopAssetPricesService _fetchTopAssetPricesService;
+    private readonly IInvertTextService _invertTextService;
 
     public TasksController(IEmitNumbersService emitNumbersService, IInvertTextService invertTextService,
-        ICalculateHashService calculateHashService)
+        ICalculateHashService calculateHashService, IFetchTopAssetPricesService fetchTopAssetPricesService)
     {
         _emitNumbersService = emitNumbersService;
         _invertTextService = invertTextService;
         _calculateHashService = calculateHashService;
+        _fetchTopAssetPricesService = fetchTopAssetPricesService;
     }
 
     [HttpPost(Name = "InvertText")]
-    public string InvertText(string text)
+    public string InvertText([FromBody] string text)
     {
         return _invertTextService.InvertText(text);
     }
@@ -35,6 +39,11 @@ public class TasksController : ControllerBase
         return await _emitNumbersService.EmitData();
     }
 
+    /// <summary>
+    /// Calculate hash of single file from Assets/CalculateHash folder
+    /// We can extend this method in future and allow passing a link to processed file or file itself
+    /// </summary>
+    /// <returns></returns>
     [HttpPost(Name = "CalculateHash")]
     public async Task<string> CalculateHash()
     {
@@ -42,8 +51,8 @@ public class TasksController : ControllerBase
     }
 
     [HttpPost(Name = "FetchTopAssetPrices")]
-    public async Task<IEnumerable<int>> FetchTopAssetPrices()
+    public async Task<ICollection<PriceResult>> FetchTopAssetPrices()
     {
-        return null;
+        return await _fetchTopAssetPricesService.FetchTopAssetPrices();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using YoloGroupTestTask.Interfaces;
 
 namespace YoloGroupTestTask.Services;
 
@@ -11,6 +12,7 @@ public class InvertTextViaStringBuilderService : IInvertTextService
         {
             sb.Append(text[i]);
         }
+
         return sb.ToString();
     }
 }

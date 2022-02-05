@@ -1,4 +1,6 @@
-﻿namespace YoloGroupTestTask.Services;
+﻿using YoloGroupTestTask.Interfaces;
+
+namespace YoloGroupTestTask.Services;
 
 public class InvertTextViaReverseService : IInvertTextService
 {

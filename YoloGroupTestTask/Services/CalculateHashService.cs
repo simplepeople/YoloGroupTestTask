@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using YoloGroupTestTask.Interfaces;
 
 namespace YoloGroupTestTask.Services;
 
@@ -26,7 +27,7 @@ public class CalculateHashService : ICalculateHashService
     {
         return File.OpenRead(filePath);
     }
-    
+
     /// <summary>
     /// If file storage stays same, then probably we have to use some queue-based mechanism
     /// with specified number of parallel reads to avoid performance degradation

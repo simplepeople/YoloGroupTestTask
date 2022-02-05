@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using YoloGroupTestTask.Interfaces;
 
 namespace YoloGroupTestTask.Services;
 
@@ -20,12 +20,10 @@ public class EmitNumbersService : IEmitNumbersService
     /// <param name="data"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    
     private async Task<bool> ConsumeData<T>(T data)
     {
         const int pause = 100;
         await Task.Delay(pause);
-        Debug.WriteLine(data?.ToString());
         return true;
     }
 }

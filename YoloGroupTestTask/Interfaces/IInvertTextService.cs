@@ -1,4 +1,4 @@
-﻿namespace YoloGroupTestTask.Services;
+﻿namespace YoloGroupTestTask.Interfaces;
 
 public interface IInvertTextService
 {
